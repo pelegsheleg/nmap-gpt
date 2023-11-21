@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS scan_results (
 
 conn.commit()  # Commits the changes
 
-openai.api_key = "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"
+openai.api_key = ""
 model_engine = "text-davinci-003"
 nm = nmap.PortScanner()
 
