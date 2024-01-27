@@ -62,26 +62,37 @@ class Scanner:
         json_data = nm.analyse_nmap_xml_scan()
         analyze = json_data["scan"]
 
-        # Prompt about what the query is all about
-        prompt = f"Do a vulnerability analysis of {analyze} and return a list of detected vulnerabilities. ..."
-        # A structure for the request
-        completion = openai.Completion.create(
-            engine=model_engine,
-            prompt=prompt,
-            max_tokens=1024,
-            n=1,
-            stop=None,
-        )
+        print("Raw nmap scan result:")
+        print(analyze)
 
-        response = completion.choices[0].text
+        # Prompt about what the query is all about
+        prompt = f"You are a security system, designed to receive a json payload with nmap scan results, you will process the results and provide detailed analysis about : {analyze} of all vulnerabilities found and how to mitigate them. you will provide this information only with most precision."
+
+        # Use the chat completions API
+        try:
+            completion = openai.ChatCompletion.create(
+                model=model_engine,
+                messages=[{"role": "system", "content": prompt}]
+            )
+        except AttributeError:
+            # Fallback in case ChatCompletion is not available
+            print("The ChatCompletion endpoint is not available.")
+            return "Error: ChatCompletion endpoint not available."
+
+        # Adjust how you access the response.
+        # In chat completions, the response might be structured differently.
+        try:
+            response = completion['choices'][0]['message']['content']
+        except (KeyError, IndexError, TypeError):
+            print("Error parsing the response from OpenAI.")
+            return "Error: Unable to parse response."
+
         conn = sqlite3.connect('scan_resultss.db')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO scan_resultss (target, profile, result) VALUES (?, ?, ?)",
                        (target, profile, response))
         conn.commit()
         return response
-
-
 
 
 class Gui:
