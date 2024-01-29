@@ -27,7 +27,7 @@ To use this Python-Nmap and GPT Vulnerability Scanner, follow these steps:
 3. Install the required Python libraries using the following command :
 go to the terminal python terminal and type 
    ```bash
-   pip install nmap openai tkinter
+   pip install nmap openai tkinter sqlite3
    ```
 
 4. You will also need an OpenAI API key. Sign up for an API key on the [OpenAI website](https://beta.openai.com/signup/) and replace `YOUR_API_KEY` with your actual API key in the script.
