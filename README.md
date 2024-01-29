@@ -90,4 +90,4 @@ This project is licensed under the [MIT License](LICENSE), which means you are f
 
 ---
 
-This README provides a comprehensive guide on how to use and contribute to your Python-Nmap and GPT Vulnerability Scanner project. Make sure to update it with any changes or additional information as needed.
+This README provides a comprehensive guide on how to use and contribute to your Python-Nmap and GPT Vulnerability Scanner project.
